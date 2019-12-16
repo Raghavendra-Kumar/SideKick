@@ -1,0 +1,198 @@
+{
+  "workflow": {
+    "id": 12688,
+    "name": "Hackathon Payment Failure",
+    "description": "",
+    "parameters": {
+    },
+    "data": {
+    },
+    "original_workflow_id": null,
+    "type": "Workflow::Setup",
+    "ondemand_trigger": true,
+    "callout_trigger": true,
+    "scheduled_trigger": false,
+    "interval": null,
+    "timezone": null,
+    "status": null,
+    "finished_at": null,
+    "css": {
+      "top": "-30px",
+      "left": "-200px"
+    },
+    "notifications": {
+    },
+    "started_at": null,
+    "call_type": null,
+    "priority": "Medium",
+    "sync_trigger": false,
+    "run_mode": "automated",
+    "delete_ttl": 60,
+    "task_summary": {
+    }
+  },
+  "tasks": [
+    {
+      "id": 66440,
+      "name": "Payment status",
+      "parameters": {
+        "filename": "Payment-Monthly-Payment-Status-Summary.csv",
+        "label_id": "ff8080816734de9301673a38a9214598",
+        "viewType": "Summary",
+        "default_filters": "true",
+        "selected_fields": "{\"payment_status\":\"Payment: Status\",\"sum_of_payment_amount\":\"SUM of 'Payment: Amount'\",\"count_of_payment_id\":\"COUNT of 'Payment: ID'\"}",
+        "strict_variables": "true"
+      },
+      "action_type": "Reporting::RunReport",
+      "object": null,
+      "object_id": "2c9f80826ec8dc39016ef938212d549b",
+      "call_type": "SOAP",
+      "task_id": null,
+      "original_task_id": null,
+      "original_workflow_id": null,
+      "status": null,
+      "error": null,
+      "error_details": null,
+      "process_id": null,
+      "css": {
+        "top": "-30px",
+        "left": "120px"
+      },
+      "concurrent_limit": 5,
+      "iterate_row_reference": null,
+      "error_class": null,
+      "object_batched_reference": null,
+      "tags": [
+        ""
+      ],
+      "priority": "Medium",
+      "assignment": [
+
+      ]
+    },
+    {
+      "id": 66441,
+      "name": "Iterate data",
+      "parameters": {
+        "chunk_size": "0",
+        "iteration_type": "Default",
+        "strict_variables": "true"
+      },
+      "action_type": "Iterate",
+      "object": "Payment-Monthly-Payment-Status-Summary__66440.csv",
+      "object_id": null,
+      "call_type": "SOAP",
+      "task_id": 66440,
+      "original_task_id": null,
+      "original_workflow_id": null,
+      "status": null,
+      "error": null,
+      "error_details": null,
+      "process_id": null,
+      "css": {
+        "top": "-30px",
+        "left": "380px"
+      },
+      "concurrent_limit": 9999999,
+      "iterate_row_reference": null,
+      "error_class": null,
+      "object_batched_reference": null,
+      "tags": [
+        ""
+      ],
+      "priority": "Medium",
+      "assignment": [
+
+      ]
+    },
+    {
+      "id": 66442,
+      "name": "Alexa Notif",
+      "parameters": {
+        "url": "http://api.notifymyecho.com/v1/NotifyMe",
+        "datas": [
+          {
+            "key": "",
+            "value": ""
+          }
+        ],
+        "method": "POST",
+        "headers": [
+          {
+            "key": "",
+            "value": ""
+          }
+        ],
+        "raw_body": "{\r\n     \"notification\": \"For the current month we have {{Data.Report.count_of_payment_id}} payments in {{Data.Report.payment_status}} state for the amount {{Data.Report.sum_of_payment_amount}} Dollars\",\r\n     \"accessCode\": \"amzn1.ask.account.AGISB7OHTSLK72DXOCBL7573YUNL4NDTACZPEKYV4CEZOXPB5H5BGZGYNA2UR7GAD4EUIJP3GIU57KIK3L2EAAZQ6ZQ3ONBIENSXKTWLOXR5WZGD437776YDH63Y5XPWTS4TPJ3RFBC34SMAEGAJDOAFXXB2Z6WQYTC22L7UNZ2C4OMHIF5YJ7ZUX544LKFAFIKENWVBZHQ7RFI\",\r\n     \"title\": \"string\" \r\n}",
+        "body_type": "raw",
+        "validation": {
+          "replace": "false",
+          "zuora_call": "false",
+          "status_codes": [
+            "",
+            "200"
+          ],
+          "payload_location": "Callout"
+        },
+        "retry_rules": {
+          "retry_count": "0",
+          "retry_window": "30",
+          "current_retry_count": "0"
+        },
+        "authorization": {
+          "type": "none"
+        },
+        "strict_variables": "true",
+        "validate_response": "false",
+        "validation_scheme": "",
+        "include_response_code": "true"
+      },
+      "action_type": "Callout",
+      "object": null,
+      "object_id": null,
+      "call_type": "SOAP",
+      "task_id": 66441,
+      "original_task_id": null,
+      "original_workflow_id": null,
+      "status": null,
+      "error": null,
+      "error_details": null,
+      "process_id": null,
+      "css": {
+        "top": "-30px",
+        "left": "640px"
+      },
+      "concurrent_limit": 9999999,
+      "iterate_row_reference": null,
+      "error_class": null,
+      "object_batched_reference": null,
+      "tags": [
+        ""
+      ],
+      "priority": "Medium",
+      "assignment": [
+
+      ]
+    }
+  ],
+  "linkages": [
+    {
+      "source_workflow_id": 12688,
+      "source_task_id": null,
+      "target_task_id": 66440,
+      "linkage_type": "Start"
+    },
+    {
+      "source_workflow_id": null,
+      "source_task_id": 66440,
+      "target_task_id": 66441,
+      "linkage_type": "Success"
+    },
+    {
+      "source_workflow_id": null,
+      "source_task_id": 66441,
+      "target_task_id": 66442,
+      "linkage_type": "For Each"
+    }
+  ]
+}

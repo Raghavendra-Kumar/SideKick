@@ -1,0 +1,138 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "z side kick",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "SetEndpoint",
+                    "slots": [
+                        {
+                            "name": "endpoint",
+                            "type": "endpoint",
+                            "samples": [
+                                "zuora"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "Get me the recent {endpoint} status",
+                        "get me Erraneous {endpoint} report",
+                        "fetch me Erraneous {endpoint} report",
+                        "What is my {endpoint} status",
+                        "Are there any Erraneous {endpoint}",
+                        "Waht is my {endpoint} status",
+                        "Process {endpoint}",
+                        "Erroneous {endpoint} ",
+                        "zuora {endpoint}",
+                        "get {endpoint}",
+                        "select {endpoint}",
+                        "{endpoint}"
+                    ]
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": []
+                }
+            ],
+            "types": [
+                {
+                    "name": "endpoint",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "Payment",
+                                "synonyms": [
+                                    "Payment failures"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Report",
+                                "synonyms": [
+                                    "Zuora Reports"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "Health",
+                                "synonyms": [
+                                    "Zuora health check"
+                                ]
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "billrun",
+                                "synonyms": [
+                                    "Erroneous billrun status"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "SetEndpoint",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "endpoint",
+                            "type": "endpoint",
+                            "confirmationRequired": false,
+                            "elicitationRequired": true,
+                            "prompts": {
+                                "elicitation": "Elicit.Slot.115056216243.411589033271"
+                            }
+                        }
+                    ]
+                }
+            ],
+            "delegationStrategy": "ALWAYS"
+        },
+        "prompts": [
+            {
+                "id": "Elicit.Slot.115056216243.411589033271",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Payment"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "subscription"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "billrun"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "invoice"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "{endpoint}"
+                    }
+                ]
+            }
+        ]
+    }
+}

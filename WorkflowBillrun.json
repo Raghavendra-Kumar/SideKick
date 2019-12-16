@@ -1,0 +1,198 @@
+{
+  "workflow": {
+    "id": 12673,
+    "name": "hackathon Bill run error",
+    "description": "",
+    "parameters": {
+    },
+    "data": {
+    },
+    "original_workflow_id": null,
+    "type": "Workflow::Setup",
+    "ondemand_trigger": true,
+    "callout_trigger": true,
+    "scheduled_trigger": false,
+    "interval": null,
+    "timezone": null,
+    "status": null,
+    "finished_at": null,
+    "css": {
+      "top": "70px",
+      "left": "-40px"
+    },
+    "notifications": {
+    },
+    "started_at": null,
+    "call_type": null,
+    "priority": "Medium",
+    "sync_trigger": false,
+    "run_mode": "automated",
+    "delete_ttl": 60,
+    "task_summary": {
+    }
+  },
+  "tasks": [
+    {
+      "id": 66235,
+      "name": "Erroneous Bill Run",
+      "parameters": {
+        "filename": "BillingRun-Erroneous-Bill-run-Summary.csv",
+        "label_id": "ff8080816734de9301673a38a9214598",
+        "viewType": "Summary",
+        "default_filters": "true",
+        "selected_fields": "{\"billing_run_error_message\":\"Billing Run: Error Message\",\"count_of_billing_run_billing_run_number\":\"COUNT of 'Billing Run: Billing Run Number'\"}",
+        "strict_variables": "true"
+      },
+      "action_type": "Reporting::RunReport",
+      "object": null,
+      "object_id": "2c9f80826ec8dc39016ef8bd649663e0",
+      "call_type": "SOAP",
+      "task_id": null,
+      "original_task_id": null,
+      "original_workflow_id": null,
+      "status": null,
+      "error": null,
+      "error_details": null,
+      "process_id": null,
+      "css": {
+        "top": "70px",
+        "left": "260px"
+      },
+      "concurrent_limit": 5,
+      "iterate_row_reference": null,
+      "error_class": null,
+      "object_batched_reference": null,
+      "tags": [
+        ""
+      ],
+      "priority": "Medium",
+      "assignment": [
+
+      ]
+    },
+    {
+      "id": 66238,
+      "name": "Iterate data",
+      "parameters": {
+        "chunk_size": "0",
+        "iteration_type": "Default",
+        "strict_variables": "true"
+      },
+      "action_type": "Iterate",
+      "object": "BillingRun-Erroneous-Bill-run-Summary__66235.csv",
+      "object_id": null,
+      "call_type": "SOAP",
+      "task_id": 66235,
+      "original_task_id": null,
+      "original_workflow_id": null,
+      "status": null,
+      "error": null,
+      "error_details": null,
+      "process_id": null,
+      "css": {
+        "top": "70px",
+        "left": "520px"
+      },
+      "concurrent_limit": 9999999,
+      "iterate_row_reference": null,
+      "error_class": null,
+      "object_batched_reference": null,
+      "tags": [
+        ""
+      ],
+      "priority": "Medium",
+      "assignment": [
+
+      ]
+    },
+    {
+      "id": 66233,
+      "name": "Billrun error",
+      "parameters": {
+        "url": "http://api.notifymyecho.com/v1/NotifyMe",
+        "datas": [
+          {
+            "key": "",
+            "value": ""
+          }
+        ],
+        "method": "POST",
+        "headers": [
+          {
+            "key": "",
+            "value": ""
+          }
+        ],
+        "raw_body": "{\r\n     \"notification\": \"We have {{Data.Report.count_of_billing_run_billing_run_number}} bill runs in error status due to {{Data.Report.billing_run_error_message}} \",\r\n     \"accessCode\": \"amzn1.ask.account.AGISB7OHTSLK72DXOCBL7573YUNL4NDTACZPEKYV4CEZOXPB5H5BGZGYNA2UR7GAD4EUIJP3GIU57KIK3L2EAAZQ6ZQ3ONBIENSXKTWLOXR5WZGD437776YDH63Y5XPWTS4TPJ3RFBC34SMAEGAJDOAFXXB2Z6WQYTC22L7UNZ2C4OMHIF5YJ7ZUX544LKFAFIKENWVBZHQ7RFI\",\r\n     \"title\": \"string\" \r\n}",
+        "body_type": "raw",
+        "validation": {
+          "replace": "false",
+          "zuora_call": "false",
+          "status_codes": [
+            "",
+            "200"
+          ],
+          "payload_location": "Callout"
+        },
+        "retry_rules": {
+          "retry_count": "0",
+          "retry_window": "30",
+          "current_retry_count": "0"
+        },
+        "authorization": {
+          "type": "none"
+        },
+        "strict_variables": "true",
+        "validate_response": "false",
+        "validation_scheme": "",
+        "include_response_code": "true"
+      },
+      "action_type": "Callout",
+      "object": null,
+      "object_id": null,
+      "call_type": "SOAP",
+      "task_id": 66232,
+      "original_task_id": null,
+      "original_workflow_id": null,
+      "status": null,
+      "error": null,
+      "error_details": null,
+      "process_id": null,
+      "css": {
+        "top": "70px",
+        "left": "790px"
+      },
+      "concurrent_limit": 9999999,
+      "iterate_row_reference": null,
+      "error_class": null,
+      "object_batched_reference": null,
+      "tags": [
+        ""
+      ],
+      "priority": "Medium",
+      "assignment": [
+
+      ]
+    }
+  ],
+  "linkages": [
+    {
+      "source_workflow_id": 12673,
+      "source_task_id": null,
+      "target_task_id": 66235,
+      "linkage_type": "Start"
+    },
+    {
+      "source_workflow_id": null,
+      "source_task_id": 66235,
+      "target_task_id": 66238,
+      "linkage_type": "Success"
+    },
+    {
+      "source_workflow_id": null,
+      "source_task_id": 66238,
+      "target_task_id": 66233,
+      "linkage_type": "For Each"
+    }
+  ]
+}
